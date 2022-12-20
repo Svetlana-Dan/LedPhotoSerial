@@ -3,22 +3,22 @@ import time
 
 lengths = {'f': 3,
            'u': 0,
-           'd': 0
+           'd': 0,
            'a': 3, 
            'b': 0}
            
-def get_connection(port):
+def get_connection(port): //подключение
     ser = serial.Serial(port, timeout = 1)
     return ser
 
-def send(ser, message, mesg_len):
-    ser.write(message)
-    time.sleep(0.1)
-    result = None
+def send(ser, message, mesg_len): //отправляет команды в ардуино
+    ser.write(message) 
+    time.sleep(0.1) 
+    result = None 
     if mesg_len != 0:
         data = ser.read(mesg_len)
-        result = data.decode()
-        result = result.strip()
+        result = data.decode() 
+        result = result.strip() //удаляем пробелы
         print(result)
     return result
    

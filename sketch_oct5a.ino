@@ -7,8 +7,8 @@ void setup() {
 }
 
 void loop() {
-  if (Serial.available() > 0){
-    char message = Serial.read();
+  if (Serial.available() > 0){ //проверяем пришли ли символы
+    char message = Serial.read(); 
     if (message == 'u'){
       digitalWrite(led_pin, HIGH);
     }
@@ -16,8 +16,8 @@ void loop() {
       digitalWrite(led_pin, LOW);
     }
     else if (message == 'f' || message == 'a'){
-      int val = analogRead(sensor_pin);
-      val = map(val, 0, 1023, 100, 999);
+      int val = analogRead(sensor_pin); 
+      val = map(val, 0, 1023, 100, 999); //аналоговый может меняться от 0 до 1023, а нам нужно 3 значное число, потому что питон принимает 3 символа
       Serial.print(val);
     }
     else if(message != 'b'){

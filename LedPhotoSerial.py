@@ -13,11 +13,11 @@ def get_connection(port): //подключение
 
 def send(ser, message, mesg_len): //отправляет команды в ардуино
     ser.write(message) 
-    time.sleep(0.1) 
+    time.sleep(0.1) //задержка
     result = None 
     if mesg_len != 0:
-        data = ser.read(mesg_len)
-        result = data.decode() 
+        data = ser.read(mesg_len) //считывает сообщение
+        result = data.decode() //декодирует
         result = result.strip() //удаляем пробелы
         print(result)
     return result
@@ -28,29 +28,29 @@ lst = []
 stop = False
 
 if __name__ == '__main__':
-    ser = get_connection("/dev/cu.usbserial-1130")
+    ser = get_connection("/dev/cu.usbserial-1130") //подключаемся
     while True:
-          while stop:
-            timeout = time.time() + 10
-            cmd = 'f'
-            val = send(ser, cmd.encode(), lengths[cmd])
-            if val:
-                val = int(val)
-                lst.append(val)
+          while stop: //чтобы пока не считал не работало
+            timeout = time.time() + 10 //текущее время +10с
+            cmd = 'f' 
+            val = send(ser, cmd.encode(), lengths[cmd]) // получаем значения
+            if val: //если зачение пришло
+                val = int(val) //записываем значение в инт
+                lst.append(val) //добавляем значение в массив??
                 if val > val_max:
-                    val_max = val
+                    val_max = val //находим максимум
                 if val < val_min:
-                    val_min = val
+                    val_min = val //находим минимум
                 if val < ((val_min + val_max) / 2):
-                    send(ser, 'u'.encode(), 0)
+                    send(ser, 'u'.encode(), 0) //вкл
                 else:
-                    send(ser, 'd'.encode(), 0)
+                    send(ser, 'd'.encode(), 0) //выкл
                 time.sleep(1)
-            if (time.time() > timeout):
+            if (time.time() > timeout): //если прошло 10с прерывается
                 break
-        inp = input("Enter command:")
-        lenght = lenghts.get(inp, 0)
-        send(ser, inp.encode(), lenght)
+        inp = input("Enter command:") //считываем команду
+        lenght = lenghts.get(inp, 0) //записываем длину команды
+        send(ser, inp.encode(), lenght) //отправляем в ардуино
         if inp == 'a':
             stop = True
         if inp == 'b':

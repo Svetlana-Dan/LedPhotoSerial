@@ -38,7 +38,7 @@ if __name__ == '__main__':
             send(ser, 'u'.encode(), 0) //вкл
         if inp == 2:
             send(ser, 'd'.encode(), 0) //выкл
-        if inp == 3:
+        if inp == 3: //вкл-выкл по показаниям
             while stop: //чтобы пока не считал не работало
                 timeout = time.time() + 10 //текущее время +10с
                 cmd = 'f' 
@@ -57,7 +57,7 @@ if __name__ == '__main__':
                     #time.sleep(1)
                     if (time.time() > timeout): //если прошло 10с прерывается
                         break
-        if inp == 4:
+        if inp == 4: //выводим показания
             while stop: //чтобы пока не считал не работало
                 timeout = time.time() + 10 //текущее время +10с
                 cmd = 'f' 
